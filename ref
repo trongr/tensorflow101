@@ -1,0 +1,7 @@
+
+INSTALLING TENSORFLOW (MAC)
+
+    sudo easy_install pip
+    sudo easy_install --upgrade six
+    pip install tensorflow
+    # TODO. install tensorflow gpu
