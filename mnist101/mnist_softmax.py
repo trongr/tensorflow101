@@ -8,12 +8,13 @@ def main():
     x = tf.placeholder(tf.float32, [None, 784])
     W = tf.Variable(tf.zeros([784, 10])) # Init to zeroes: what about symmetry breaking?
     b = tf.Variable(tf.zeros([10]))
-    y = tf.nn.softmax(tf.matmul(x, W) + b)
-
     y_ = tf.placeholder(tf.float32, [None, 10]) # ground truth probability distribution
+
     # Average cross entropy cross over training data in minibatch:
     # tf.nn.softmax_cross_entropy_with_logits is more stable numerically:
+    # y = tf.nn.softmax(tf.matmul(x, W) + b)
     # cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(y), reduction_indices=[1]))
+    y = tf.matmul(x, W) + b # softmax logits, i.e. unscaled class scores
     cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=y_, logits=y))
     learning_rate = 0.5
     train_step = tf.train.GradientDescentOptimizer(learning_rate).minimize(cross_entropy)
